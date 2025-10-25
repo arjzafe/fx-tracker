@@ -28,7 +28,7 @@ export const DateField = ({ value, onChange }: DateFieldProps) => {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
         label="Select Date"
-        defaultValue={value ? dayjs(value) : null}
+        value={value ? dayjs(value) : null}
         onChange={handleChange}
         minDate={minDate}
         maxDate={maxDate}

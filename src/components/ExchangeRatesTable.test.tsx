@@ -41,6 +41,19 @@ describe("ExchangeRatesTable", () => {
     expect(progressIndicator).toBeInTheDocument();
   });
 
+  it("should display 'No exchange rates available' message when there are no rates", () => {
+    render(
+      <ExchangeRatesTable
+        filteredExchangeRates={{}}
+        selectedCurrencies={defaultSelectedCurrencies}
+        loading={false}
+      />
+    );
+
+    expect(screen.getByText("No exchange rates available")).toBeInTheDocument();
+    expect(screen.queryByRole("table")).not.toBeInTheDocument();
+  });
+
   it("should display table headers for Date and selected currencies", () => {
     render(
       <ExchangeRatesTable

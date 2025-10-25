@@ -8,6 +8,7 @@ import {
   Paper,
   CircularProgress,
   Box,
+  Typography,
 } from "@mui/material";
 import type { ExchangeRates } from "../+store/currencies";
 
@@ -37,6 +38,21 @@ export function ExchangeRatesTable({ filteredExchangeRates, selectedCurrencies, 
   }
 
   const dates = Object.keys(filteredExchangeRates).sort();
+
+  if (dates.length === 0) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="200px"
+      >
+        <Typography variant="body1" color="text.secondary">
+          No exchange rates available
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <TableContainer

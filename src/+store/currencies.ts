@@ -43,10 +43,18 @@ const currenciesSlice = createSlice({
     setBaseCurrency: (state, action: PayloadAction<string>) => {
       const newBaseCurrency = action.payload;
       state.baseCurrency = newBaseCurrency;
+      
+      if (!newBaseCurrency || newBaseCurrency.trim() === "") {
+        state.exchangeRates = {};
+      }
     },
     setSelectedDate: (state, action: PayloadAction<string>) => {
       state.selectedDate = action.payload;
       state.availableDates = getLast7Days(action.payload);
+      
+      if (!action.payload || action.payload.trim() === "") {
+        state.exchangeRates = {};
+      }
     },
     setCurrencies: (state, action: PayloadAction<Record<string, string>>) => {
       state.currencies = action.payload;
@@ -81,6 +89,10 @@ export const fetchCurrencies = createAsyncThunk("currencies/fetchCurrencies", as
 export const fetchExchangeRates = createAsyncThunk(
   "currencies/fetchExchangeRates",
   async ({ baseCurrency, availableDates }: { baseCurrency: string; availableDates: string[] }) => {
+    if (baseCurrency.trim() === "" || availableDates.length === 0) {
+      return {};
+    }
+    
     const exchangeRates: ExchangeRates = {};
 
     for (const date of availableDates) {
