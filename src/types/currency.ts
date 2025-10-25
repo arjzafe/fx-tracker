@@ -1,0 +1,6 @@
+export interface CurrencyOption {
+  value: string;
+  label: string;
+  searchText?: string;
+}
+

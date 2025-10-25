@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { getCurrencies, getExchangeRates } from "../services/currencyService";
 import dayjs from "dayjs";
+import type { RootState } from "./store";
 
-interface ExchangeRates {
+export interface ExchangeRates {
   [date: string]: Record<string, number>;
 }
 
@@ -13,6 +14,7 @@ interface CurrencyState {
   currencies: Record<string, string>;
   selectedCurrencies: string[];
   exchangeRates: ExchangeRates;
+  loading: boolean;
 }
 
 const getLast7Days = (date: string): string[] => {
@@ -30,6 +32,7 @@ const initialState: CurrencyState = {
   currencies: {},
   selectedCurrencies: ["usd", "eur", "jpy", "chf", "cad", "aud", "zar"],
   exchangeRates: {},
+  loading: false,
 };
 
 const currenciesSlice = createSlice({
@@ -47,13 +50,23 @@ const currenciesSlice = createSlice({
     setCurrencies: (state, action: PayloadAction<Record<string, string>>) => {
       state.currencies = action.payload;
     },
+    setSelectedCurrencies: (state, action: PayloadAction<string[]>) => {
+      state.selectedCurrencies = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchCurrencies.fulfilled, (state, action) => {
       state.currencies = action.payload;
     });
+    builder.addCase(fetchExchangeRates.pending, (state) => {
+      state.loading = true;
+    });
     builder.addCase(fetchExchangeRates.fulfilled, (state, action) => {
       state.exchangeRates = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(fetchExchangeRates.rejected, (state) => {
+      state.loading = false;
     });
   },
 });
@@ -77,5 +90,21 @@ export const fetchExchangeRates = createAsyncThunk(
   }
 );
 
-export const { setBaseCurrency, setCurrencies, setSelectedDate } = currenciesSlice.actions;
+export const { setBaseCurrency, setCurrencies, setSelectedDate, setSelectedCurrencies } = currenciesSlice.actions;
 export default currenciesSlice.reducer;
+
+export const selectFilteredExchangeRates = (state: RootState) => {
+  const { exchangeRates, selectedCurrencies } = state.currencies;
+  const filtered: ExchangeRates = {};
+
+  for (const date in exchangeRates) {
+    filtered[date] = {};
+    for (const currency of selectedCurrencies) {
+      if (exchangeRates[date][currency] !== undefined) {
+        filtered[date][currency] = exchangeRates[date][currency];
+      }
+    }
+  }
+
+  return filtered;
+};

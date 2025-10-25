@@ -36,6 +36,7 @@ export const DateField = ({ value, onChange }: DateFieldProps) => {
           textField: {
             fullWidth: true,
             variant: "outlined",
+            size: "small",
           },
         }}
       />

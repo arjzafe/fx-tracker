@@ -1,11 +1,6 @@
 import { useMemo } from "react";
 import { Autocomplete, TextField, type AutocompleteRenderInputParams } from "@mui/material";
-
-interface CurrencyOption {
-  value: string;
-  label: string;
-  searchText: string;
-}
+import { type CurrencyOption } from "../types/currency";
 
 interface Props {
   currencies: Record<string, string>;
@@ -30,7 +25,7 @@ export function CurrencySelector({ currencies, selectedCurrency, onCurrencyChang
     }
 
     const searchTerm = inputValue.toLowerCase();
-    return options.filter((option) => option.searchText.includes(searchTerm));
+    return options.filter((option) => option.searchText?.includes(searchTerm) || false);
   };
 
   const renderInput = (params: AutocompleteRenderInputParams) => (
@@ -48,6 +43,7 @@ export function CurrencySelector({ currencies, selectedCurrency, onCurrencyChang
       filterOptions={filterOptions}
       renderInput={renderInput}
       isOptionEqualToValue={(option, value) => option.value === value.value}
+      size="small"
     />
   );
 }

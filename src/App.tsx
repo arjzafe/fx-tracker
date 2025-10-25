@@ -2,12 +2,13 @@ import { Container } from "@mui/material";
 import "./App.scss";
 import Header from "./components/Header";
 import { CurrencySelector } from "./components/CurrencySelector";
-import { fetchCurrencies, fetchExchangeRates, setBaseCurrency, setSelectedDate } from "./+store/currencies";
+import { fetchCurrencies, fetchExchangeRates, setBaseCurrency, setSelectedDate, setSelectedCurrencies, selectFilteredExchangeRates } from "./+store/currencies";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "./+store/store";
 import { ExchangeRatesTable } from "./components/ExchangeRatesTable";
 import { DateField } from "./components/DateField";
+import { CompareCurrenciesFilter } from "./components/CompareCurrenciesFilter";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -15,6 +16,9 @@ function App() {
   const baseCurrency = useSelector((state: RootState) => state.currencies.baseCurrency);
   const selectedDate = useSelector((state: RootState) => state.currencies.selectedDate);
   const availableDates = useSelector((state: RootState) => state.currencies.availableDates);
+  const filteredExchangeRates = useSelector(selectFilteredExchangeRates);
+  const selectedCurrencies = useSelector((state: RootState) => state.currencies.selectedCurrencies);
+  const loading = useSelector((state: RootState) => state.currencies.loading);
 
   const handleCurrencyChange = (currency: string) => {
     dispatch(setBaseCurrency(currency));
@@ -22,6 +26,10 @@ function App() {
 
   const handleSelectedDateChange = (date: string) => {
     dispatch(setSelectedDate(date));
+  };
+
+  const handleSelectedCurrenciesChange = (currencies: string[]) => {
+    dispatch(setSelectedCurrencies(currencies));
   };
 
   useEffect(() => {
@@ -46,10 +54,19 @@ function App() {
             value={selectedDate}
             onChange={handleSelectedDateChange}
           />
+          <CompareCurrenciesFilter
+            selectedCurrencies={selectedCurrencies}
+            currencies={currencies}
+            onCurrenciesChange={handleSelectedCurrenciesChange}
+          />
         </div>
 
         <div className="mt-2">
-          <ExchangeRatesTable />
+          <ExchangeRatesTable 
+            filteredExchangeRates={filteredExchangeRates}
+            selectedCurrencies={selectedCurrencies}
+            loading={loading}
+          />
         </div>
       </Container>
     </>
