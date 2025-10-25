@@ -1,17 +1,23 @@
-import { AppBar, Container, Toolbar, Typography } from "@mui/material";
+import { AppBar, Container, Toolbar, Typography, Box } from "@mui/material";
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 
 const Header = () => {
   return (
-    <AppBar position="static">
+    <AppBar
+      position="static"
+    >
       <Toolbar>
         <Container maxWidth="xl">
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1 }}
-          >
-            Currency Exchange Rates
-          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+            <TrendingUpIcon sx={{ fontSize: 32 }} />
+            <Typography
+              variant="h5"
+              component="div"
+              sx={{ flexGrow: 1, fontWeight: 600 }}
+            >
+              Currency Exchange Rates
+            </Typography>
+          </Box>
         </Container>
       </Toolbar>
     </AppBar>

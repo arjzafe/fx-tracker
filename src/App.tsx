@@ -2,7 +2,14 @@ import { Container } from "@mui/material";
 import "./App.scss";
 import Header from "./components/Header";
 import { CurrencySelector } from "./components/CurrencySelector";
-import { fetchCurrencies, fetchExchangeRates, setBaseCurrency, setSelectedDate, setSelectedCurrencies, selectFilteredExchangeRates } from "./+store/currencies";
+import {
+  fetchCurrencies,
+  fetchExchangeRates,
+  setBaseCurrency,
+  setSelectedDate,
+  setSelectedCurrencies,
+  selectFilteredExchangeRates,
+} from "./+store/currencies";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "./+store/store";
@@ -41,35 +48,49 @@ function App() {
   }, [dispatch, baseCurrency, availableDates]);
 
   return (
-    <>
+    <div className="app-container">
       <Header />
       <Container maxWidth="xl">
-        <div className="mt-4">
-          <CurrencySelector
-            selectedCurrency={baseCurrency}
-            onCurrencyChange={handleCurrencyChange}
-            currencies={currencies}
-          />
-          <DateField
-            value={selectedDate}
-            onChange={handleSelectedDateChange}
-          />
-          <CompareCurrenciesFilter
-            selectedCurrencies={selectedCurrencies}
-            currencies={currencies}
-            onCurrenciesChange={handleSelectedCurrenciesChange}
-          />
-        </div>
+        <div className="content-wrapper">
+          <div className="controls-section">
+            <div className="controls-title">Exchange Rate Controls</div>
 
-        <div className="mt-2">
-          <ExchangeRatesTable 
-            filteredExchangeRates={filteredExchangeRates}
-            selectedCurrencies={selectedCurrencies}
-            loading={loading}
-          />
+            <div className="d-flex">
+              <div className="base-container">
+                <CurrencySelector
+                  selectedCurrency={baseCurrency}
+                  onCurrencyChange={handleCurrencyChange}
+                  currencies={currencies}
+                />
+              </div>
+
+              <div className="date-container">
+                <DateField
+                  value={selectedDate}
+                  onChange={handleSelectedDateChange}
+                />
+              </div>
+
+              <div className="compare-container">
+                <CompareCurrenciesFilter
+                  selectedCurrencies={selectedCurrencies}
+                  currencies={currencies}
+                  onCurrenciesChange={handleSelectedCurrenciesChange}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="table-section mt-2">
+            <ExchangeRatesTable
+              filteredExchangeRates={filteredExchangeRates}
+              selectedCurrencies={selectedCurrencies}
+              loading={loading}
+            />
+          </div>
         </div>
       </Container>
-    </>
+    </div>
   );
 }
 

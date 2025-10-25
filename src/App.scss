@@ -1,6 +1,42 @@
-.mt-2 {
-    margin-top: 2rem;
+.app-container {
+  min-height: 100vh;
+  padding-bottom: 2rem;
 }
-.mt-4 {
-    margin-top: 4rem;
+
+.content-wrapper {
+  margin-top: 2rem;
+}
+
+.controls-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #ccc;
+}
+
+.table-section {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.mt-2 {
+  margin-top: 2rem;
+}
+
+.d-flex {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+}
+
+.base-container {
+    width: 100%;
+    max-width: 200px;
+}
+
+.compare-container {
+    margin-left: auto;
 }
