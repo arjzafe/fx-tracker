@@ -35,6 +35,7 @@ const initialState: CurrencyState = {
   loading: false,
 };
 
+// reducers
 const currenciesSlice = createSlice({
   name: "currencies",
   initialState,
@@ -71,6 +72,7 @@ const currenciesSlice = createSlice({
   },
 });
 
+// Effects 
 export const fetchCurrencies = createAsyncThunk("currencies/fetchCurrencies", async () => {
   const response = await getCurrencies();
   return response;
@@ -90,9 +92,7 @@ export const fetchExchangeRates = createAsyncThunk(
   }
 );
 
-export const { setBaseCurrency, setCurrencies, setSelectedDate, setSelectedCurrencies } = currenciesSlice.actions;
-export default currenciesSlice.reducer;
-
+// Selectors
 export const selectFilteredExchangeRates = (state: RootState) => {
   const { exchangeRates, selectedCurrencies } = state.currencies;
   const filtered: ExchangeRates = {};
@@ -108,3 +108,6 @@ export const selectFilteredExchangeRates = (state: RootState) => {
 
   return filtered;
 };
+
+export const { setBaseCurrency, setCurrencies, setSelectedDate, setSelectedCurrencies } = currenciesSlice.actions;
+export default currenciesSlice.reducer;
