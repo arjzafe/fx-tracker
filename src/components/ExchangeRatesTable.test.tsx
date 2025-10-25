@@ -17,7 +17,7 @@ describe("ExchangeRatesTable", () => {
     },
     "2025-01-17": {
       gbp: 1.3456,
-      usd: 1.7890,
+      usd: 1.789,
       eur: 0.9123,
     },
   };
@@ -117,7 +117,7 @@ describe("ExchangeRatesTable", () => {
 
     const table = screen.getByRole("table");
     const headers = within(table).getAllByRole("columnheader");
-    
+
     expect(headers).toHaveLength(3);
     expect(headers[0]).toHaveTextContent("Date");
     expect(headers[1]).toHaveTextContent("GBP");
@@ -125,4 +125,3 @@ describe("ExchangeRatesTable", () => {
     expect(within(table).queryByText("EUR")).not.toBeInTheDocument();
   });
 });
-

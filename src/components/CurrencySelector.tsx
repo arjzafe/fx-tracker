@@ -29,8 +29,12 @@ export function CurrencySelector({ currencies, selectedCurrency, onCurrencyChang
   };
 
   const renderInput = (params: AutocompleteRenderInputParams) => (
-    <TextField {...params} label="Select Currency" variant="outlined" />
-  ); 
+    <TextField
+      {...params}
+      label="Select Currency"
+      variant="outlined"
+    />
+  );
 
   return (
     <Autocomplete

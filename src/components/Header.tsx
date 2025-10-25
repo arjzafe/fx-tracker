@@ -3,9 +3,7 @@ import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 
 const Header = () => {
   return (
-    <AppBar
-      position="static"
-    >
+    <AppBar position="static">
       <Toolbar>
         <Container maxWidth="xl">
           <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>

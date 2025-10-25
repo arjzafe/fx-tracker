@@ -32,11 +32,11 @@ describe("CurrencySelector", () => {
     const textbox = screen.getByLabelText(/Select Currency/i);
 
     await userEvent.click(textbox);
-    const listBox = await screen.findByRole('listbox');
-    const usdOption = within(listBox).getByText('USD');
+    const listBox = await screen.findByRole("listbox");
+    const usdOption = within(listBox).getByText("USD");
     await userEvent.click(usdOption);
 
-    expect(textbox).toHaveValue('USD');
-    expect(mockOnCurrencyChange).toHaveBeenCalledExactlyOnceWith('usd');
+    expect(textbox).toHaveValue("USD");
+    expect(mockOnCurrencyChange).toHaveBeenCalledExactlyOnceWith("usd");
   });
 });

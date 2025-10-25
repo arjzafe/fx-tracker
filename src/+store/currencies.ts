@@ -72,7 +72,7 @@ const currenciesSlice = createSlice({
   },
 });
 
-// Effects 
+// Effects
 export const fetchCurrencies = createAsyncThunk("currencies/fetchCurrencies", async () => {
   const response = await getCurrencies();
   return response;

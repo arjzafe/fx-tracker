@@ -3,12 +3,12 @@ import "./App.scss";
 import Header from "./components/Header";
 import { CurrencySelector } from "./components/CurrencySelector";
 import {
-  fetchCurrencies,
-  fetchExchangeRates,
-  setBaseCurrency,
-  setSelectedDate,
-  setSelectedCurrencies,
-  selectFilteredExchangeRates,
+    fetchCurrencies,
+    fetchExchangeRates,
+    setBaseCurrency,
+    setSelectedDate,
+    setSelectedCurrencies,
+    selectFilteredExchangeRates,
 } from "./+store/currencies";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
