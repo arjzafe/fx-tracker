@@ -18,8 +18,8 @@ export const getCurrencies = async (): Promise<Record<string, string>> => {
   }
 };
 
-export const getExchangeRates = async (currencyCode: string): Promise<Record<string, number>> => {
-  const url = `${API_BASE_URL}@2024-03-02/v1/currencies/${currencyCode}.json`;
+export const getExchangeRates = async (currencyCode: string, date: string): Promise<Record<string, number>> => {
+  const url = `${API_BASE_URL}@${date}/v1/currencies/${currencyCode}.json`;
   try {
     const response = await axios.get<ExchangeRatesResponse>(url);
     return response.data[currencyCode] as Record<string, number>;
