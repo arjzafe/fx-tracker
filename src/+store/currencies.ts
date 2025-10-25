@@ -1,4 +1,5 @@
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { getCurrencies, getExchangeRates } from "../services/currencyService";
 
 interface CurrencyState {
   baseCurrency: string;
@@ -19,12 +20,23 @@ const currenciesSlice = createSlice({
   initialState,
   reducers: {
     setBaseCurrency: (state, action: PayloadAction<string>) => {
-      state.baseCurrency = action.payload;
+      const newBaseCurrency = action.payload;
+      state.baseCurrency = newBaseCurrency;
     },
     setCurrencies: (state, action: PayloadAction<Record<string, string>>) => {
       state.currencies = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(fetchCurrencies.fulfilled, (state, action) => {
+      state.currencies = action.payload;
+    });
+  },
+});
+
+export const fetchCurrencies = createAsyncThunk('currencies/fetchCurrencies', async () => {
+  const response = await getCurrencies();
+  return response;
 });
 
 export const { setBaseCurrency, setCurrencies } = currenciesSlice.actions;
